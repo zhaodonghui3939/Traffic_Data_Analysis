@@ -8,6 +8,6 @@ object Traffic {
     val sc  = new SparkContext()
     val data = sc.textFile("/data/traffic/taxi/original_data/gps/GPS_2014_05_20")
     val carInfo = BaseComputing.getCarInfo(data).cache()
-    val tem = new Gather(carInfo).run
+    val gatherResult = new Gather(carInfo).run
   }
 }
