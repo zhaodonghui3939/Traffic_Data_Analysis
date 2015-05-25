@@ -30,7 +30,6 @@ class Gather(data:RDD[(String,Array[GPSRecord])]) extends Serializable{
               }
             }
             val last = fun(y)
-
             if(!last.isEmpty) {
               if(StringToLong(last(0).time) - StringToLong(x.time) >= time)
                 result += ((x.time + "," + last(0).time+ "," + x.latitude + "," + x.longitude))
