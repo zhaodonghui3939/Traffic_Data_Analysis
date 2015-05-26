@@ -97,7 +97,7 @@ class Gather(data:RDD[(String,Array[GPSRecord])]) extends Serializable{
       }
     }.filter(!_._2.isEmpty).flatMap{
       case (key,value) => {
-        value.map(line => (key,line))
+        value.map(line => (key,line.reduce((a,b) => a + " " + b)))
       }
     }
   }
