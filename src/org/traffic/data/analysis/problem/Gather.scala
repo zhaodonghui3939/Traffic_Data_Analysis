@@ -86,7 +86,7 @@ class Gather(data:RDD[(String,Array[GPSRecord])]) extends Serializable{
       }
     }.map{
       case line => {
-        val key = line.split(",")(3).substring(0,7) + "_" + line.split(",")(4).substring(0,7)
+        val key = line.split(",")(3).substring(0,6) + "_" + line.split(",")(4).substring(0,7)
         (key,line)
       }
     }.groupByKey().filter(line => line._2.toArray.map(_.split(",")(0)).distinct.length >= 5)
