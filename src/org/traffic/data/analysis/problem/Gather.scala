@@ -67,7 +67,13 @@ class Gather(data:RDD[(String,Array[GPSRecord])]) extends Serializable{
       }
     }
     getResult(cars_sorted)
-    result
+    val finResult = new ArrayBuffer[Array[String]]()
+    //结果去重
+    finResult += result(0)
+    for(i <- 1 until result.length){
+      if(finResult.filter(_.containsSlice(result(i))).length == 0) finResult += result(i)
+    }
+    finResult
   }
 
   def run = {
