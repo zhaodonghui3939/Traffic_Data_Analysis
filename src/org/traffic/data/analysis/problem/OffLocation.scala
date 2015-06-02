@@ -10,7 +10,7 @@ class OffLocation(gps:RDD[String],trans:RDD[String]) extends Serializable{
     val formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     (formatter.parse(time).getTime - formatter.parse("2014-01-01 00:00:00").getTime) / 1000
   }
-  private def findearest(gpsInfo:Array[Long],endTime:Long):Int = {//gpsInfo已经从小到大排序好了
+  private def findearest(gpsInfo:Array[Long],endTime:Long):Int = {//gpsInfo已经按照时间从小到大排序好了
     var low = 0
     var high =  gpsInfo.length - 1
     var mid = 0
