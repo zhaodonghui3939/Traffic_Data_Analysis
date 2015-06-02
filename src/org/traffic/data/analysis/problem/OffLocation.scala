@@ -22,7 +22,7 @@ class OffLocation(gps:RDD[String],trans:RDD[String]) extends Serializable{
     }
     return mid
   }
-
+  //gps信息根据carid进行聚合
   private val gpsInfo = gps.map{
     case record => {
       val ss = record.split(",")
@@ -31,10 +31,10 @@ class OffLocation(gps:RDD[String],trans:RDD[String]) extends Serializable{
     }
   }.groupByKey().map{
     case (carId,values) => {
-      (carId,values.toArray.distinct.sortBy(_.split(",")(3)))
+      (carId,values.toArray.distinct.sortBy(_.split(",")(3)))//去重并且根据时间排序
     }
   }
-
+  //交易数据根据carid进行聚合
   private val transInfo = trans.map{
     case record => {
       val ss = record.split(",")
@@ -43,11 +43,12 @@ class OffLocation(gps:RDD[String],trans:RDD[String]) extends Serializable{
     }
   }.groupByKey().map{
     case (carId,values) => {
-      (carId,values.toArray.distinct)
+      (carId,values.toArray.distinct)//数据去重
     }
   }
 
   def run = {
+    //根据carid进行join，然后内部计算下车地点
     transInfo.join(gpsInfo).flatMap{
       case (carId,(trans,gps)) => {
         val gpsTime = gps.map(_.split(",")(3)).map(StringToLong(_))
